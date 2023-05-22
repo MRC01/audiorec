@@ -21,6 +21,11 @@ Next, edit the file 'dbStuff.jsp' and set the server, port, and account to use t
 
 This app also uses Tomcat. If you don't already have it installed, you need to do that first. Then create a new directory under Tomcat webapps - see "Deploy home" above. Copy all the JSP files for this project to that directory.
 
+You must add the PostgreSQL JDBC JAR file to the Tomcat classpath. This JAR is not included in the PostgreSQL server or client installations. You must find and download it separately. For PostgreSQL version 14:
+
+JAR file: postgresql-42.6.0.jar
+Tomcat dir: /usr/share/tomcat9/lib
+
 You're done - the app is ready to use.
 
 *Running the App*
