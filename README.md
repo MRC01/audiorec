@@ -7,8 +7,8 @@ Implemented in Postgres
 Runs in Tomcat version 7 or 9
 
 *JSP Application*
-Source code: \[Your local directory\]/audiorec
-Deploy home: /var/lib/tomcat9/webapps/audiorec
+Source code: \[Your local directory\]/audiorec<br/>
+Deploy home: /var/lib/tomcat9/webapps/audiorec<br/>
 
 Any files you change in the source dir must be copied to the deploy dir.
 They take effect immediately; no need to restart Tomcat.
@@ -23,8 +23,8 @@ This app also uses Tomcat. If you don't already have it installed, you need to d
 
 You must add the PostgreSQL JDBC JAR file to the Tomcat classpath. This JAR is not included in the PostgreSQL server or client installations. You must find and download it separately. For PostgreSQL version 14:
 
-JAR file: postgresql-42.6.0.jar
-Tomcat dir: /usr/share/tomcat9/lib
+JAR file: postgresql-42.6.0.jar<br/>
+Tomcat dir: /usr/share/tomcat9/lib<br/>
 
 You're done - the app is ready to use.
 
