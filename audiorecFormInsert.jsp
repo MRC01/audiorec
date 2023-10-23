@@ -26,25 +26,27 @@
 	<body>
 		<h1><a href="appMain.jsp">Back to Audio Recordings</a></h1>
 			<%
-			String	id, title, composer, performer, soloist, director, genre, label, release, releaseid, recdate, location, format, channels, dynrange, notes;
+			String	id, title, composer, performer, soloist, director, genre, location, recdate, rec_notes
+					,label, release, releaseid, format, channels, dynrange, rel_notes;
 			title = request.getParameter("title");
 			composer = request.getParameter("composer");
 			performer = request.getParameter("performer");
 			soloist = request.getParameter("soloist");
 			director = request.getParameter("director");
 			genre = request.getParameter("genre");
+			location = request.getParameter("location");
+			recdate = request.getParameter("recdate");
+			rec_notes = request.getParameter("rec_notes");
 			label = request.getParameter("label");
 			release = request.getParameter("release");
 			releaseid = request.getParameter("releaseid");
-			recdate = request.getParameter("recdate");
-			location = request.getParameter("location");
 			format = request.getParameter("format");
 			channels = request.getParameter("channels");
 			dynrange = request.getParameter("dynrange");
-			notes = request.getParameter("notes");
+			rel_notes = request.getParameter("rel_notes");
 			try {
 				String sqlUpdate = "insert into audiorecs"
-					+ " (title, composer, performer, soloist, director, genre, label, release, releaseid, recdate, location, format, channels, dynrange, notes)"
+					+ " (title, composer, performer, soloist, director, genre, location, recdate, notes)"
 					+ " values ("
 					+ strToDb(title)
 					+ ", " + strToDb(composer)
@@ -52,15 +54,9 @@
 					+ ", " + strToDb(soloist)
 					+ ", " + strToDb(director)
 					+ ", " + strToDb(genre)
-					+ ", " + strToDb(label)
-					+ ", " + strToDb(release)
-					+ ", " + strToDb(releaseid)
-					+ ", " + strToDb(recdate)
 					+ ", " + strToDb(location)
-					+ ", " + strToDb(format)
-					+ ", " + strToDb(channels)
-					+ ", " + strToDb(dynrange)
-					+ ", " + strToDb(notes)
+					+ ", " + strToDb(recdate)
+					+ ", " + strToDb(rec_notes)
 					+ ")";
 				PreparedStatement st = dbConnGet().prepareStatement(sqlUpdate, Statement.RETURN_GENERATED_KEYS);
 				int rc = st.executeUpdate();
@@ -71,8 +67,46 @@
 					if(rs.next()) {
 						id = rs.getString(1);
 						if(id.length() > 0) {
-							// success! redirect to the Audiorec Main page
-							response.sendRedirect("audiorecMain.jsp?id=" + id);
+							// success! now insert the release info
+							String sqlUpdate = "insert into releases"
+								+ " (audiorec_id, label, release, releaseid, format, channels, dynrange, notes)"
+								+ " values ("
+								+ strToDb(id)
+								+ ", " + strToDb(label)
+								+ ", " + strToDb(release)
+								+ ", " + strToDb(releaseid)
+								+ ", " + strToDb(reldate)
+								+ ", " + strToDb(format)
+								+ ", " + strToDb(channels)
+								+ ", " + strToDb(dynrange)
+								+ ", " + strToDb(rel_notes)
+								+ ")";
+							PreparedStatement st = dbConnGet().prepareStatement(sqlUpdate, Statement.RETURN_GENERATED_KEYS);
+							int rc = st.executeUpdate();
+							if(rc > 0) {
+								// success! get the generated primary key (ID)
+								id = "";
+								ResultSet rs = st.getGeneratedKeys();
+								if(rs.next()) {
+									id = rs.getString(1);
+									if(id.length() > 0) {
+										// success! commit the transaction
+										response.sendRedirect("audiorecMain.jsp?id=" + id);
+									}
+									else {
+										// Insert succeeded new ID had no value
+										throw new Exception("Insert succeeded, but new ID had no value");
+									}
+								}
+								else {
+									// Insert succeeded but could not get generated ID
+									throw new Exception("Insert succeeded but could not get new ID");
+								}
+							}
+							else {
+								// Update failed - this should never happen
+								throw new Exception("Insert release failed");
+							}
 						}
 						else {
 							// Insert succeeded new ID had no value

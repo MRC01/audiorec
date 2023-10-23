@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
 <%
-// The ID of the audiorec we are reviewing was passed to us
-String	audiorec_id, audiorecRef;
-audiorec_id = request.getParameter("id");
-audiorecRef = "<a href=\"audiorecMain.jsp?id=" + audiorec_id + "\">Audio Recording</a>";
+// The ID of the release we are reviewing was passed to us
+String	release_id, releaseRef;
+release_id = request.getParameter("id");
+releaseRef = "<a href=\"releaseMain.jsp?id=" + release_id + "\">Audio Recording Release</a>";
 %>
 <html>
 	<head>
@@ -11,18 +11,20 @@ audiorecRef = "<a href=\"audiorecMain.jsp?id=" + audiorec_id + "\">Audio Recordi
 	</head>
 	<body>
 		<h1><a href="appMain.jsp">Back to Audio Recordings</a></h1>
-		<font size="+2"><b><%= audiorecRef %></b></font>
+		<font size="+2"><b><%= releaseRef %></b></font>
 		<!-- Show info about the recording being reviewed -->
 		<%
-		// We're given the audiorec ID
+		// We're given the release ID
 		try {
 			Statement st = dbConnGet().createStatement();
 			ResultSet rs = st.executeQuery(
-					"select a.title, a.composer, a.performer, a.recdate, a.label"
-					+ " from audiorecs a"
-					+ " where a.id=" + audiorec_id
+					"select a.title, a.composer, a.performer, a.recdate"
+					+ ", l.label, l.release, l.format, l.reldate"
+					+ " from releases l"
+					+ " join audiorecs a on a.id = l.audiorec_id"
+					+ " where l.id=" + release_id
 				);
-			// There can be at most one record for this audiorec ID
+			// There can be at most one record for this label ID
 			if(rs.next()) {
 				%>
 				<br>Title:<font size="-1"><%= strFromDb(rs.getString("title")) %></font>
@@ -30,6 +32,9 @@ audiorecRef = "<a href=\"audiorecMain.jsp?id=" + audiorec_id + "\">Audio Recordi
 				<br>Performer:<font size="-1"><%= strFromDb(rs.getString("performer")) %></font>
 				<br>Rec Date:<font size="-1"><%= strFromDb(rs.getString("recdate")) %></font>
 				<br>Label:<font size="-1"><%= strFromDb(rs.getString("label")) %></font>
+				<br>Release:<font size="-1"><%= strFromDb(rs.getString("release")) %></font>
+				<br>Format:<font size="-1"><%= strFromDb(rs.getString("format")) %></font>
+				<br>Rel Date:<font size="-1"><%= strFromDb(rs.getString("reldate")) %></font>
 				<%
 			}
 			else {

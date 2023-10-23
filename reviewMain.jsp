@@ -13,12 +13,14 @@
 		try {
 			Statement st = dbConnGet().createStatement();
 			ResultSet rs = st.executeQuery(
-					"select r.id, r.date_created, r.date_updated, r.audiorec_id, r.reviewer_id"
+					"select r.id, r.release_id, a.id as audiorec_id, r.reviewer_id"
+					+ ", r.date_created, r.date_updated"
 					+ ", r.ratesound, r.rateperf, r.notes, r.date_created, r.date_updated"
-					+ ", a.title, a.composer, a.performer, a.recdate, a.label"
+					+ ", a.title, a.composer, a.performer, a.recdate, l.label"
 					+ ", v.initials"
 					+ " from reviews r"
-					+ " join audiorecs a on a.id = r.audiorec_id"
+					+ " join releases l on l.id = r.release_id"
+					+ " join audiorecs a on a.id = l.audiorec_id"
  					+ " join reviewers v on v.id = r.reviewer_id"
 					+ " where r.id=" + id
 				);

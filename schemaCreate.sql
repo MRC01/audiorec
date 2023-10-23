@@ -20,14 +20,8 @@ create table audiorecs (
 	, soloist	varchar(255)
 	, director	varchar(255)
 	, genre		varchar(255)
-	, label		varchar(255)
-	, release	varchar(255)
-	, releaseid	varchar(255)
 	, recdate	date
 	, location	varchar(255)
-	, format	varchar(255)
-	, channels	varchar(255)
-	, dynrange	varchar(255)
 	, notes		varchar(255)
 	, date_created	date default current_date
 	, date_updated	date default current_date
@@ -41,11 +35,37 @@ for each row
 execute procedure trigger_set_date_updated()
 ;
 
+drop table if exists releases
+;
+create table releases (
+	id			bigserial primary key
+	, audiorec_id	bigint
+	, label		varchar(255)
+	, release	varchar(255)
+	, releaseid	varchar(255)
+	, reldate	date
+	, format	varchar(255)
+	, channels	varchar(255)
+	, dynrange	varchar(255)
+	, notes		varchar(255)
+	, date_created	date default current_date
+	, date_updated	date default current_date
+)
+;
+drop trigger if exists releases_updated on releases
+;
+create trigger releases_updated
+before update on releases
+for each row
+execute procedure trigger_set_date_updated()
+;
+
 drop table if exists reviews
 ;
 create table reviews (
 	id				bigserial primary key
 	, audiorec_id	bigint
+	, release_id	bigint
 	, reviewer_id	bigint
 	, ratesound		int
 	, rateperf		int

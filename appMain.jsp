@@ -61,12 +61,14 @@
 		<br>
 		<%
 		// Determine the sort order from query param "sort"
-		String sortStr = "composer, title, performer, recdate, label";
+		String sortStr = "composer, title, performer, recdate";
 		String sortField = request.getParameter("sort");
 		if("title".equals(sortField))
-			sortStr = "title, composer, performer, recdate, label";
+			sortStr = "title, composer, performer, recdate";
 		if("performer".equals(sortField))
-			sortStr = "performer, composer, title, recdate, label";
+			sortStr = "performer, composer, title, recdate";
+		if("ratecount".equals(sortField))
+			sortStr = "ratecount, " + sortStr;
 		if("rateperf".equals(sortField))
 			sortStr = "rateperf, " + sortStr;
 		if("ratesound".equals(sortField))
@@ -98,9 +100,10 @@
 			ResultSet rs = st.executeQuery(
 					"select ar.id as audiorec_id "
 					+ ", title, composer, performer, recdate"
-					+ ", avg(rateperf) as rateperf, avg(ratesound) as ratesound"
+					+ ", count(ratesound) as ratecount, avg(rateperf) as rateperf, avg(ratesound) as ratesound"
 					+ " from audiorecs ar"
-					+ " left outer join reviews rv on (ar.id = rv.audiorec_id)"
+					+ " left outer join releases rl on (ar.id = rl.audiorec_id)"
+					+ " left outer join reviews rv on (rl.id = rv.release_id)"
 					+ " where " + whereStr
 					+ " group by ar.id"
 					+ " order by " + sortStr
@@ -118,6 +121,7 @@
 					<td><a href="<%= baseUrl + "title" %>">Title</a></td>
 					<td><a href="<%= baseUrl + "performer" %>">Performer</a></td>
 					<td><a href="<%= baseUrl + "recdate" %>">Rec Date</a></td>
+					<td><a href="<%= baseUrl + "ratecount" %>">Reviews</a></td>
 					<td><a href="<%= baseUrl + "rateperf" %>">Performance</a></td>
 					<td><a href="<%= baseUrl + "ratesound" %>">Sound</a></td>
 				</tr>
@@ -130,7 +134,8 @@
 					+ "\">"
 					+ rs.getString("audiorec_id")
 					+ "</a>";
-				String	rPerf = String.format("%.1f", rs.getFloat("rateperf")),
+				String	rCount = String.format("%d", rs.getInt("ratecount")),
+						rPerf = String.format("%.1f", rs.getFloat("rateperf")),
 						rSound = String.format("%.1f", rs.getFloat("ratesound"));
 				%>
 					<tr>
@@ -139,6 +144,7 @@
 						<td><%= rs.getString("title") %></td>
 						<td><%= rs.getString("performer") %></td>
 						<td><%= rs.getDate("recdate") %></td>
+						<td><%= rCount %></td>
 						<td><%= rPerf %></td>
 						<td><%= rSound %></td>
 					</tr>
