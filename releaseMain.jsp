@@ -1,25 +1,41 @@
 <%@ include file="dbStuff.jsp" %>
 <%@ include file="extraKrud.jsp" %>
-<font size="+2">
-Audiorec Release
-</font>
+<html>
+<body>
 <%
 // The given ID is for an audiorec release
 String id = request.getParameter("id");
 try {
 	Statement st = dbConnGet().createStatement();
 	ResultSet rs = st.executeQuery(
-			"select id, audiorec_id"
-			+ ", label, release, releaseid, reldate, format"
-			+ ", channels, dynrange, notes, date_created, date_updated"
-			+ " from releases"
-			+ " where id=" + id
+			"select l.id, l.audiorec_id"
+			+ ", l.label, l.release, l.releaseid, l.reldate, l.format"
+			+ ", l.channels, l.dynrange, l.notes, l.date_created, l.date_updated"
+			+ ", a.title, a.composer, a.performer"
+			+ " from releases l"
+			+ " join audiorecs a on (a.id = l.audiorec_id)"
+			+ " where l.id=" + id
 		);
 	// There can be at most one record for this ID
 	if(rs.next()) {
+		// Link back to audiorec for this release
+		String aRef;
+		aRef = "<a href=\"audiorecMain.jsp?id="
+			+ strFromDb(rs.getString("audiorec_id"))
+			+ "\"><b>Audiorec</b> "
+			+ strFromDb(rs.getString("audiorec_id"))
+			+ "</a>";
 		%>
+		<font size="+2">
+		<%= aRef %>
+		</font>
+		<br>
+		<br>Title: <%= strFromDb(rs.getString("title")) %>
+		<br>Composer: <%= strFromDb(rs.getString("composer")) %>
+		<br>Performer: <%= strFromDb(rs.getString("performer")) %>
+		<p>
 		<form method=post action="releaseFormUpdate.jsp">
-			ID <font size="-1"><%= strFromDb(rs.getString("id")) %></font>
+			<font size="+2"><b>Release</b></font> <%= strFromDb(rs.getString("id")) %>
 			<br>Date Created: <font size="-1"><%= strFromDb(rs.getString("date_created")) %></font>
 			<br>Date Updated: <font size="-1"><%= strFromDb(rs.getString("date_updated")) %></font>
 			<input type=hidden name=id value="<%= strFromDb(rs.getString("id")) %>">
@@ -64,3 +80,5 @@ catch(Exception ex) {
 	dbConnReset();
 }
 %>
+</body>
+</html>

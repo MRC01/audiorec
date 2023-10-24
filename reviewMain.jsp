@@ -16,7 +16,8 @@
 					"select r.id, r.release_id, a.id as audiorec_id, r.reviewer_id"
 					+ ", r.date_created, r.date_updated"
 					+ ", r.ratesound, r.rateperf, r.notes, r.date_created, r.date_updated"
-					+ ", a.title, a.composer, a.performer, a.recdate, l.label"
+					+ ", a.title, a.composer, a.performer, a.recdate"
+					+ ", l.label, l.release, l.reldate, l.format"
 					+ ", v.initials"
 					+ " from reviews r"
 					+ " join releases l on l.id = r.release_id"
@@ -26,11 +27,16 @@
 				);
 			// There can be at most one record for this review ID
 			if(rs.next()) {
-				String aRef, vRef;
+				String aRef, vRef, lRef;
 				aRef = "<a href=\"audiorecMain.jsp?id="
 					+ strFromDb(rs.getString("audiorec_id"))
 					+ "\">"
 					+ strFromDb(rs.getString("audiorec_id"))
+					+ "</a>";
+				lRef = "<a href=\"releaseMain.jsp?id="
+					+ strFromDb(rs.getString("release_id"))
+					+ "\">"
+					+ strFromDb(rs.getString("release_id"))
 					+ "</a>";
 				vRef = "<a href=\"reviewerMain.jsp?id="
 					+ strFromDb(rs.getString("reviewer_id"))
@@ -45,7 +51,13 @@
 					<br>Composer:<font size="-1"><%= strFromDb(rs.getString("composer")) %></font>
 					<br>Performer:<font size="-1"><%= strFromDb(rs.getString("performer")) %></font>
 					<br>Rec Date:<font size="-1"><%= strFromDb(rs.getString("recdate")) %></font>
+					<p>
+					Release ID <%= lRef %>
+					<input type=hidden name=release_id value="<%= strFromDb(rs.getString("release_id")) %>">
 					<br>Label:<font size="-1"><%= strFromDb(rs.getString("label")) %></font>
+					<br>Release:<font size="-1"><%= strFromDb(rs.getString("release")) %></font>
+					<br>Rel Date:<font size="-1"><%= strFromDb(rs.getString("reldate")) %></font>
+					<br>Format:<font size="-1"><%= strFromDb(rs.getString("format")) %></font>
 					<p>
 					Reviewer ID <%= vRef %>
 					<input type=hidden name=reviewer_id value="<%= strFromDb(rs.getString("reviewer_id")) %>">
