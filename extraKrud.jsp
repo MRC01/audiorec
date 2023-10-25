@@ -28,7 +28,8 @@
 		try {
 			dbConnGet().createStatement().execute(
 					"start transaction;"
-					+ " delete from reviews where audiorec_id=" + id + ";"
+					+ " delete from reviews where release_id in (select release_id from releases where audiorec_id=" + id + ");"
+					+ " delete from releases where audiorec_id=" + id + ";"
 					+ " delete from audiorecs where id=" + id + ";"
 					+ " commit;"
 				);

@@ -74,7 +74,7 @@
 				// Show all releases for this recording
 				%>
 				<jsp:include page="audiorecReleases.jsp">
-					<jsp:param name="id" value="<%= strFromDb(rs.getString(\"id\")) %>"/>
+					<jsp:param name="id" value="<%= id %>"/>
 				</jsp:include>
 				<%
 				rs.close();

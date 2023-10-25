@@ -19,8 +19,8 @@ try {
 			"select l.id as lid, l.label, l.release, l.reldate, l.format"
 			+ ", count(r.ratesound) as ratecount, avg(r.rateperf) as rateperf, avg(r.ratesound) as ratesound"
 			+ " from releases l"
-			+ " join reviews r on (r.release_id = l.id)"
-			+ " join reviewers p on (p.id = r.reviewer_id)"
+			+ " left outer join reviews r on (r.release_id = l.id)"
+			+ " left outer join reviewers p on (p.id = r.reviewer_id)"
 			+ " where l.audiorec_id = " + id
 			+ " group by 1, 2, 3, 4, 5"
 			+ " order by l.id"
