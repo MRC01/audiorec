@@ -22,7 +22,7 @@
 				if(rs.next()) {
 					%>
 					<form method=post action="audiorecFormUpdate.jsp">
-						ID <font size="-1"><%= strFromDb(rs.getString("id")) %></font>
+						<font size="+1">Audiorec ID </font><%= strFromDb(rs.getString("id")) %></font>
 						<br>Date Created: <font size="-1"><%= strFromDb(rs.getString("date_created")) %></font>
 						<br>Date Updated: <font size="-1"><%= strFromDb(rs.getString("date_updated")) %></font>
 						<input type=hidden name=id value="<%= strFromDb(rs.getString("id")) %>">

@@ -22,11 +22,11 @@ try {
 		String aRef;
 		aRef = "<a href=\"audiorecMain.jsp?id="
 			+ strFromDb(rs.getString("audiorec_id"))
-			+ "\"><b>Audiorec</b> "
+			+ "\"><b>Audiorec ID</b> "
 			+ strFromDb(rs.getString("audiorec_id"))
 			+ "</a>";
 		%>
-		<font size="+2">
+		<font size="+1">
 		<%= aRef %>
 		</font>
 		<br>
@@ -35,7 +35,7 @@ try {
 		<br>Performer: <%= strFromDb(rs.getString("performer")) %>
 		<p>
 		<form method=post action="releaseFormUpdate.jsp">
-			<font size="+2"><b>Release</b></font> <%= strFromDb(rs.getString("id")) %>
+			<font size="+1">Release ID</font> <%= strFromDb(rs.getString("id")) %>
 			<br>Date Created: <font size="-1"><%= strFromDb(rs.getString("date_created")) %></font>
 			<br>Date Updated: <font size="-1"><%= strFromDb(rs.getString("date_updated")) %></font>
 			<input type=hidden name=id value="<%= strFromDb(rs.getString("id")) %>">

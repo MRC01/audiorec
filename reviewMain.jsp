@@ -18,7 +18,7 @@
 					+ ", r.ratesound, r.rateperf, r.notes, r.date_created, r.date_updated"
 					+ ", a.title, a.composer, a.performer, a.recdate"
 					+ ", l.label, l.release, l.reldate, l.format"
-					+ ", v.initials"
+					+ ", v.initials, v.misc"
 					+ " from reviews r"
 					+ " join releases l on l.id = r.release_id"
 					+ " join audiorecs a on a.id = l.audiorec_id"
@@ -62,6 +62,7 @@
 					Reviewer ID <%= vRef %>
 					<input type=hidden name=reviewer_id value="<%= strFromDb(rs.getString("reviewer_id")) %>">
 					<br>Reviewer Initials <font size="-1"><%= strFromDb(rs.getString("initials")) %></font>
+					<br>Misc <font size="-1"><%= strFromDb(rs.getString("misc")) %></font>
 					<input type=hidden name=reviewer_id value="<%= strFromDb(rs.getString("initials")) %>">
 					<p>
 					Review ID <font size="-1"><%= strFromDb(rs.getString("id")) %></font>

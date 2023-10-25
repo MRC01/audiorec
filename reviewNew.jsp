@@ -11,7 +11,7 @@ releaseRef = "<a href=\"releaseMain.jsp?id=" + release_id + "\">Audio Recording 
 	</head>
 	<body>
 		<h1><a href="appMain.jsp">Back to Audio Recordings</a></h1>
-		<font size="+2"><b><%= releaseRef %></b></font>
+		<font size="+1"><b><%= releaseRef %></b></font>
 		<!-- Show info about the recording being reviewed -->
 		<%
 		// We're given the release ID
@@ -39,7 +39,7 @@ releaseRef = "<a href=\"releaseMain.jsp?id=" + release_id + "\">Audio Recording 
 			}
 			else {
 				// No record for this ID (this should never happen)
-				throw new Exception("No audiorec having ID " + audiorec_id);
+				throw new Exception("No release having ID " + release_id);
 			}
 			rs.close();
 		}
@@ -58,8 +58,8 @@ releaseRef = "<a href=\"releaseMain.jsp?id=" + release_id + "\">Audio Recording 
 		<b><font size="+2">New Review</font></b>
 		<br>
 		<form method=post action="reviewFormInsert.jsp">
-			Audiorec ID <font size="-1"><%= audiorec_id %></font>
-			<input type=hidden name=audiorec_id value="<%= audiorec_id %>">
+			Release ID <font size="-1"><%= release_id %></font>
+			<input type=hidden name=release_id value="<%= release_id %>">
 			<br>Reviewer ID
 			<input type=text name=reviewer_id size=20>
 			<br>Sound (1-10)
