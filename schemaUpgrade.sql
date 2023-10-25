@@ -60,3 +60,8 @@ alter table audiorecs
 
 alter table reviews rename column audiorec_id to release_id
 ;
+
+-- Set the autonumber sequence for releases primary key to skip the values already added from audiorec
+-- First select max(id) from releases and add 1 to get X
+alter sequence releases_id_seq restart with X
+;
