@@ -67,6 +67,8 @@
 			sortStr = "title, composer, performer, recdate";
 		if("performer".equals(sortField))
 			sortStr = "performer, composer, title, recdate";
+		if("relcount".equals(sortField))
+			sortStr = "relcount, " + sortStr;
 		if("ratecount".equals(sortField))
 			sortStr = "ratecount, " + sortStr;
 		if("rateperf".equals(sortField))
@@ -100,7 +102,8 @@
 			ResultSet rs = st.executeQuery(
 					"select ar.id as audiorec_id "
 					+ ", title, composer, performer, recdate"
-					+ ", count(ratesound) as ratecount, avg(rateperf) as rateperf, avg(ratesound) as ratesound"
+					+ ", count(distinct rl.id) as relcount, count(ratesound) as ratecount"
+					+ ", avg(rateperf) as rateperf, avg(ratesound) as ratesound"
 					+ " from audiorecs ar"
 					+ " left outer join releases rl on (ar.id = rl.audiorec_id)"
 					+ " left outer join reviews rv on (rl.id = rv.release_id)"
@@ -121,6 +124,7 @@
 					<td><a href="<%= baseUrl + "title" %>">Title</a></td>
 					<td><a href="<%= baseUrl + "performer" %>">Performer</a></td>
 					<td><a href="<%= baseUrl + "recdate" %>">Rec Date</a></td>
+					<td><a href="<%= baseUrl + "relcount" %>">Releases</a></td>
 					<td><a href="<%= baseUrl + "ratecount" %>">Reviews</a></td>
 					<td><a href="<%= baseUrl + "rateperf" %>">Performance</a></td>
 					<td><a href="<%= baseUrl + "ratesound" %>">Sound</a></td>
@@ -134,7 +138,8 @@
 					+ "\">"
 					+ rs.getString("audiorec_id")
 					+ "</a>";
-				String	rCount = String.format("%d", rs.getInt("ratecount")),
+				String	relCount = String.format("%d", rs.getInt("relcount")),
+						rCount = String.format("%d", rs.getInt("ratecount")),
 						rPerf = String.format("%.1f", rs.getFloat("rateperf")),
 						rSound = String.format("%.1f", rs.getFloat("ratesound"));
 				%>
@@ -144,6 +149,7 @@
 						<td><%= rs.getString("title") %></td>
 						<td><%= rs.getString("performer") %></td>
 						<td><%= rs.getDate("recdate") %></td>
+						<td><%= relCount %></td>
 						<td><%= rCount %></td>
 						<td><%= rPerf %></td>
 						<td><%= rSound %></td>

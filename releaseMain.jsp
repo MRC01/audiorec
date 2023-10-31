@@ -2,6 +2,7 @@
 <%@ include file="extraKrud.jsp" %>
 <html>
 <body>
+<h1><a href="appMain.jsp">Back to Audio Recordings</a></h1>
 <%
 // The given ID is for an audiorec release
 String id = request.getParameter("id");

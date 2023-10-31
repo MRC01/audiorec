@@ -31,3 +31,24 @@ You're done - the app is ready to use.
 *Running the App*
 
 Ensure Tomcat is running and point your browser to "http://SERVERNAME:8080/audiorec/AppMain.jsp"
+
+*PostgreSQL Bug*
+
+Here's a PostgreSQL bug that I found:
+
+Consider an erroneous SQL statement like this, because the column "release_id" doesn't exist.
+
+select release_id from releases where audiorec_id=1
+
+Now wrap it in a delete, like this:
+
+select * from reviews where release_id in (select release_id from releases where audiorec_id=1);
+
+This deletes ALL rows in reviews!
+However, if you replace the erroneous statement with another like this:
+
+select * from reviews where release_id in (select foobar from releases where audiorec_id=1);
+
+Postgres will return a SQL error, like it should.
+The problem seems to be that column release_id does not exist, but it resembles column releaseid, which does exist.
+This shouldn't matter, but apparently it does!
