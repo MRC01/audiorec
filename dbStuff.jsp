@@ -1,7 +1,7 @@
 <%@ page import="java.sql.*" %>
 <%!
 	static final String driverClassName = "org.postgresql.Driver"
-			, connectionURL = "jdbc:postgresql://mclements3:5432/audiorec_rec_release"
+			, connectionURL = "jdbc:postgresql://mclements3:5432/audiorec"
 			, dbUser = "sa"
 			, dbPwd = "sa123"
 			;
