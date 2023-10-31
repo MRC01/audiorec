@@ -8,17 +8,17 @@
 	<body>
 		<h1><a href="appMain.jsp">Back to Audio Recordings</a></h1>
 			<%
-			String	id, audiorec_id, reviewer_id, ratesound, rateperf, notes;
-			audiorec_id = request.getParameter("audiorec_id");
+			String	id, release_id, reviewer_id, ratesound, rateperf, notes;
+			release_id = request.getParameter("release_id");
 			reviewer_id = request.getParameter("reviewer_id");
 			ratesound  = request.getParameter("ratesound");
 			rateperf = request.getParameter("rateperf");
 			notes = request.getParameter("notes");
 			try {
 				String sqlUpdate = "insert into reviews"
-					+ " (audiorec_id, reviewer_id, ratesound, rateperf, notes)"
+					+ " (release_id, reviewer_id, ratesound, rateperf, notes)"
 					+ " values ("
-					+ longToDb(audiorec_id)
+					+ longToDb(release_id)
 					+ ", " + longToDb(reviewer_id)
 					+ ", " + strToDb(ratesound)
 					+ ", " + strToDb(rateperf)
@@ -33,8 +33,8 @@
 					if(rs.next()) {
 						id = rs.getString(1);
 						if(id.length() > 0) {
-							// success! redirect to the Audiorec Main page
-							response.sendRedirect("audiorecMain.jsp?id=" + audiorec_id);
+							// success! redirect to the Release Main page
+							response.sendRedirect("releaseMain.jsp?id=" + release_id);
 						}
 						else {
 							// Insert succeeded new ID had no value

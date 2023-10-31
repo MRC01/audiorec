@@ -8,7 +8,7 @@
 	<body>
 		<h1><a href="appMain.jsp">Back to Audio Recordings</a></h1>
 			<%
-			String	id, title, composer, performer, soloist, director, genre, label, release, releaseid, recdate, location, format, channels, dynrange, notes;
+			String	id, title, composer, performer, soloist, director, genre, recdate, location, notes;
 			id = request.getParameter("id");
 			title = request.getParameter("title");
 			composer = request.getParameter("composer");
@@ -16,14 +16,8 @@
 			soloist = request.getParameter("soloist");
 			director = request.getParameter("director");
 			genre = request.getParameter("genre");
-			label = request.getParameter("label");
-			release = request.getParameter("release");
-			releaseid = request.getParameter("releaseid");
 			recdate = request.getParameter("recdate");
 			location = request.getParameter("location");
-			format = request.getParameter("format");
-			channels = request.getParameter("channels");
-			dynrange = request.getParameter("dynrange");
 			notes = request.getParameter("notes");
 			try {
 				Statement st = dbConnGet().createStatement();
@@ -34,14 +28,8 @@
 					+ ", soloist = " + strToDb(soloist)
 					+ ", director = " + strToDb(director)
 					+ ", genre = " + strToDb(genre)
-					+ ", label = " + strToDb(label)
-					+ ", release = " + strToDb(release)
-					+ ", releaseid = " + strToDb(releaseid)
 					+ ", recdate = " + strToDb(recdate)
 					+ ", location = " + strToDb(location)
-					+ ", format = " + strToDb(format)
-					+ ", channels = " + strToDb(channels)
-					+ ", dynrange = " + strToDb(dynrange)
 					+ ", notes = " + strToDb(notes)
 					+ " where id=" + id;
 				int rc = st.executeUpdate(sqlUpdate);

@@ -5,20 +5,24 @@
 			return "'" + s.replace("'", "''") + "'";
 		return "NULL";
 	}
+
 	// prepare strings to be embedded into SQL commands
 	static String strFromDb(String s) {
 		if(s == null)
 			return "";
 		return s;
 	}
+
 	// prepare long integers to be embedded into SQL commands
 	static String longToDb(String s) {
 		return Long.toString(Long.parseLong(s));
 	}
+
 	static String longToDb(long val) {
 		return Long.toString(val);
 	}
-	// Delete the given audiorec, and all its reviews
+
+	// Delete the given audiorec and all related data
 	static boolean audiorecDelete(String id) throws Exception {
 		boolean rc = false;
 
@@ -28,7 +32,8 @@
 		try {
 			dbConnGet().createStatement().execute(
 					"start transaction;"
-					+ " delete from reviews where audiorec_id=" + id + ";"
+					+ " delete from reviews where release_id in (select id from releases where audiorec_id=" + id + ");"
+					+ " delete from releases where audiorec_id=" + id + ";"
 					+ " delete from audiorecs where id=" + id + ";"
 					+ " commit;"
 				);
@@ -50,6 +55,7 @@
 		}
 		return rc;
 	}
+
 	// Returns SQL query that when executed will return a histogram of rating values & frequency
 	static String getReviewHistogramQuery(String func, String col) {
 		StringBuffer	sb = new StringBuffer();
