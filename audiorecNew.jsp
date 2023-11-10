@@ -24,7 +24,7 @@
 			<br>Location
 			<input type=text name=location size=40>
 			<br>Rec Notes
-			<input text=text name=notes size=40>
+			<input text=text name=rec_notes size=40>
 			<p>
 			<font size="+1">Release</font>
 			<br>Label
@@ -42,7 +42,7 @@
 			<br>Dynamic Range
 			<input text=text name=dynrange size=40>
 			<br>Rel Notes
-			<input text=text name=notes size=40>
+			<input text=text name=rel_notes size=40>
 			<p>
 			<input type=submit value="Submit">
 		</form>
