@@ -75,7 +75,7 @@
 									id_r = rRs.getString(1);
 									if(id_r.length() > 0) {
 										// success! commit the transaction
-										response.sendRedirect("audiorecMain.jsp?id=" + id_a);
+										response.sendRedirect("releaseMain.jsp?id=" + id_r);
 									}
 									else {
 										// Insert succeeded new ID had no value
