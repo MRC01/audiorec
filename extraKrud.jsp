@@ -69,4 +69,34 @@
 		return sb.toString();
 	}
 
+	// Data to return from processRow()
+	static class RowData {
+		public RowData(String r, String c, String p, String b) {
+			rat = r;
+			cnt = c;
+			pct = p;
+			bar = b;
+		}
+		public String	rat, cnt, pct, bar;
+	}
+
+	// How long to make the barchart graphs in the histograms
+	static final double bar_scale = 3.0;
+
+	// Process a row in the histogram for ratings & reviews
+	static RowData processHistogramRow(ResultSet rs) throws Exception {
+		String			r, c, f;
+		Double			pct;
+		StringBuffer	bar_str;
+		int				bar_len;
+		r = String.format("%d", rs.getInt("rating"));
+		c = String.format("%,4d", rs.getInt("cnt"));
+		pct = rs.getDouble("pct") * 100.0;
+		f = String.format("%3.1f", pct);
+		bar_str = new StringBuffer();
+		bar_len = (int)(pct / bar_scale + 0.5);
+		for(int i = 0; i < bar_len; i++)
+			bar_str.append("=");
+		return new RowData(r, c, f, bar_str.toString());
+	}
 %>
