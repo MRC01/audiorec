@@ -3,7 +3,8 @@
 <html>
 	<%
 	String	rec_cnt = ""
-			, rev_cnt = "";
+			, rev_cnt = ""
+			, rel_cnt = "";
 	try {
 		Statement	st;
 		ResultSet	rs;
@@ -13,6 +14,11 @@
 		if(rs.next())
 			rec_cnt = String.format("%d", rs.getInt("cnt"));
 		rs.close();
+		// Get the count of releases
+		st = dbConnGet().createStatement();
+		rs = st.executeQuery("select count(*) as cnt from releases");
+		if(rs.next())
+			rel_cnt = String.format("%d", rs.getInt("cnt"));
 		// Get the count of reviews
 		st = dbConnGet().createStatement();
 		rs = st.executeQuery("select count(*) as cnt from reviews");
@@ -38,7 +44,7 @@
 		String whereField = request.getParameter("where");
 		if(whereField == null) whereField = "";
 		%>
-		<h1>Audio Recordings (<%= rec_cnt %>) and <a href="reviewRatingChart.jsp">Reviews</a> (<%= rev_cnt %>)</h1>
+		<h1>Audio Recordings (<%= rec_cnt %>), Releases (<%= rel_cnt %>), <a href="reviewRatingChart.jsp">Reviews</a> (<%= rev_cnt %>)</h1>
 		<div style="display:flex;">
 			<!-- Search button sets where param and re-displays this page -->
 			<form method="get" action="appMain.jsp">
