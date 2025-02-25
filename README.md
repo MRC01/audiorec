@@ -4,7 +4,7 @@ This is Mike's audio recording database application.
 Implemented in Postgres
 
 *Web Server*
-Runs in Tomcat version 7 or 9
+Runs in Tomcat version 7, 9 or 10
 
 *JSP Application*
 Source code: \[Your local directory\]/audiorec<br/>
