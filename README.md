@@ -8,7 +8,7 @@ Runs in Tomcat version 7 or 9
 
 *JSP Application*
 Source code: \[Your local directory\]/audiorec<br/>
-Deploy home: /var/lib/tomcat9/webapps/audiorec<br/>
+Deploy home: /var/lib/tomcat10/webapps/audiorec<br/>
 
 Any files you change in the source dir must be copied to the deploy dir.
 They take effect immediately; no need to restart Tomcat.
