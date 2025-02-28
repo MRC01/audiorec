@@ -14,10 +14,14 @@ String id = request.getParameter("id");
 try {
 	Statement st = dbConnGet().createStatement();
 	ResultSet rs = st.executeQuery(
-			"select id, date_created, date_updated"
-			+ ", initials, lastname, firstname, equipment, misc, preferences"
-			+ " from reviewers"
-			+ " where id=" + id
+			"select p.id, p.date_created, p.date_updated"
+			+ ", p.initials, p.lastname, p.firstname, p.equipment, p.misc, p.preferences"
+			+ ", count(distinct r.id) as review_count"
+			+ " from reviewers p"
+			+ " join reviews r on (r.reviewer_id = p.id)"
+			+ " where p.id=" + id
+			+ " group by p.id"
+
 		);
 	// There can be at most one record for this ID
 	if(rs.next()) {
@@ -58,6 +62,7 @@ try {
 	%>
 	<jsp:include page="reviewerReviews.jsp">
 		<jsp:param name="id" value="<%= strFromDb(rs.getString(\"id\")) %>"/>
+		<jsp:param name="count" value="<%= strFromDb(rs.getString(\"review_count\")) %>"/>
 	</jsp:include>
 	<%
 	rs.close();

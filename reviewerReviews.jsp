@@ -4,9 +4,11 @@
 <%
 // The given ID is for a reviewer
 String	id = request.getParameter("id");
+// The count is the number of reviews this reviewer has made
+String	count = request.getParameter("count");
 %>
 <font size="+2">
-Reviews
+Reviews (<%= count %>)
 </font>
 <%
 try {

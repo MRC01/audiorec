@@ -7,8 +7,11 @@
 try {
 	Statement st = dbConnGet().createStatement();
 	ResultSet rs = st.executeQuery(
-			"select id, initials, lastname, misc, equipment, preferences"
-			+ " from reviewers"
+			"select p.id, p.initials, p.lastname, p.misc, p.equipment, p.preferences"
+			+ ", count(distinct r.id) as review_count"
+			+ " from reviewers p"
+			+ " join reviews r on (r.reviewer_id = p.id)"
+			+ " group by p.id, p.initials, p.lastname, p.misc, p.equipment, p.preferences"
 			+ " order by initials"
 		);
 	%>
@@ -16,6 +19,7 @@ try {
 	<table>
 		<tr>
 			<td>Reviewer ID</td>
+			<td>Reviews</td>
 			<td>Initials</td>
 			<td>Last Name</td>
 			<td>Misc</td>
@@ -33,6 +37,7 @@ try {
 		%>
 			<tr>
 				<td><%= pRef %></td>
+				<td><%= strFromDb(rs.getString("review_count")) %></td>
 				<td><%= strFromDb(rs.getString("initials")) %></td>
 				<td><%= strFromDb(rs.getString("lastname")) %></td>
 				<td><%= strFromDb(rs.getString("misc")) %></td>
