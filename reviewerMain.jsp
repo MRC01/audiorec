@@ -18,7 +18,7 @@ try {
 			+ ", p.initials, p.lastname, p.firstname, p.equipment, p.misc, p.preferences"
 			+ ", count(distinct r.id) as review_count"
 			+ " from reviewers p"
-			+ " join reviews r on (r.reviewer_id = p.id)"
+			+ " left outer join reviews r on (r.reviewer_id = p.id)"
 			+ " where p.id=" + id
 			+ " group by p.id"
 

@@ -16,7 +16,7 @@ try {
 	ResultSet rs = st.executeQuery(
 			"select r.id as rid, r.date_created, r.date_updated, r.ratesound, r.rateperf, r.notes"
 			+ " from reviews r"
-			+ " join reviewers p on (r.reviewer_id = p.id)"
+			+ " left outer join reviewers p on (r.reviewer_id = p.id)"
 			+ " where p.id = " + id
 			+ " order by r.date_updated desc"
 		);

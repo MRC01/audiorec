@@ -10,7 +10,7 @@ try {
 			"select p.id, p.initials, p.lastname, p.misc, p.equipment, p.preferences"
 			+ ", count(distinct r.id) as review_count"
 			+ " from reviewers p"
-			+ " join reviews r on (r.reviewer_id = p.id)"
+			+ " left outer join reviews r on (r.reviewer_id = p.id)"
 			+ " group by p.id, p.initials, p.lastname, p.misc, p.equipment, p.preferences"
 			+ " order by initials"
 		);
