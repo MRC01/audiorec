@@ -99,6 +99,7 @@
 			ws.append(" or upper(format) like '%" + whereFieldUC + "%'");
 			ws.append(" or upper(dynrange) like '%" + whereFieldUC + "%'");
 			ws.append(" or upper(ar.notes) like '%" + whereFieldUC + "%'");
+			ws.append(" or upper(rl.notes) like '%" + whereFieldUC + "%'");
 			ws.append(" or upper(rv.notes) like '%" + whereFieldUC + "%'");
 			whereStr = ws.toString();
 		}
