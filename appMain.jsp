@@ -1,5 +1,10 @@
 <!DOCTYPE HTML>
 <%@ include file="dbStuff.jsp" %>
+<%!
+	// These are static so they are remembered across page loads
+	static String lastSortField = null;
+	static boolean sortDirFwd = true;
+%>
 <html>
 	<%
 	String	rec_cnt = ""
@@ -40,8 +45,8 @@
 	<body>
 		<%
 		// look for where clause param; if not there, set to empty string
-		String whereStr = "1=1";
-		String whereField = request.getParameter("where");
+		String	whereStr = "1=1"
+				, whereField = request.getParameter("where");
 		if(whereField == null) whereField = "";
 		%>
 		<h1>Audio Recordings (<%= rec_cnt %>), Releases (<%= rel_cnt %>), <a href="reviewRatingChart.jsp">Reviews</a> (<%= rev_cnt %>)</h1>
@@ -67,22 +72,23 @@
 		<br>
 		<%
 		// Determine the sort order from query param "sort"
-		String sortStr = "composer, title, performer, recdate";
-		String sortField = request.getParameter("sort");
-		if("title".equals(sortField))
-			sortStr = "title, composer, performer, recdate";
-		if("performer".equals(sortField))
-			sortStr = "performer, composer, title, recdate";
-		if("relcount".equals(sortField))
-			sortStr = "relcount, " + sortStr;
-		if("ratecount".equals(sortField))
-			sortStr = "ratecount, " + sortStr;
-		if("rateperf".equals(sortField))
-			sortStr = "rateperf, " + sortStr;
-		if("ratesound".equals(sortField))
-			sortStr = "ratesound, " + sortStr;
-		if("recdate".equals(sortField))
-			sortStr = "recdate, " + sortStr;
+		String	sortStr, sortDir
+				, sortField = request.getParameter("sort");
+		if(sortField != null && sortField.length() > 0) {
+			// Reverse sort direction each time the same field is clicked again
+			if(sortField.equals(lastSortField))
+				sortDirFwd = !sortDirFwd;
+			else
+				sortDirFwd = true;
+			sortDir = (sortDirFwd ? "asc" : "desc");
+			// Sort on the clicked field primary, last field secondary
+			sortStr = sortField + " " + sortDir;
+			if(lastSortField != null && lastSortField.length() > 0)
+				sortStr += ", " + lastSortField;
+		}
+		else
+			sortStr = "composer, title, performer, recdate";
+		lastSortField = sortField;
 		// Determine records to include from query param "where"
 		if(whereField.length() > 0) {
 			StringBuilder ws = new StringBuilder();
