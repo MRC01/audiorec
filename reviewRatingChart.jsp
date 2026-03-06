@@ -119,6 +119,8 @@
 			border-collapse: collapse;
 			border: 1px solid black;
 			border-style: dotted;
+			table-layout: fixed;
+			width: 30px;
 		}
 		</style>
 		<table class="t1">
