@@ -2,6 +2,35 @@
 <%@ include file="dbStuff.jsp" %>
 <%@ include file="extraKrud.jsp" %>
 <html>
+<%
+	// Get the average and median ratings
+	String	s_avg, s_med, p_avg, p_med;
+	s_avg = s_med = p_avg = p_med = null;
+	try {
+		Statement	st;
+		ResultSet	rs;
+		st = dbConnGet().createStatement();
+		rs = st.executeQuery("select avg(ratesound) as s_avg"
+			+ ", percentile_cont(0.5) within group(order by ratesound) as s_med"
+			+ ", avg(rateperf) as p_avg"
+			+ ", percentile_cont(0.5) within group(order by rateperf) as p_med"
+			+ " from reviews");
+		if(rs.next()) {
+			s_avg = String.format("%3.1f", rs.getDouble("s_avg"));
+			s_med = String.format("%3.1f", rs.getDouble("s_med"));
+			p_avg = String.format("%3.1f", rs.getDouble("p_avg"));
+			p_med = String.format("%3.1f", rs.getDouble("p_med"));
+		}
+		rs.close();
+	}
+	catch(Exception ex) {
+		%>
+		<%@ include file="error.jsp" %>
+		<%
+		// reset the DB connection to force a reconnect next time
+		dbConnReset();
+	}
+%>
 	<head>
 		<title>Review Rating Analysis</title>
 	</head>
@@ -13,7 +42,7 @@
 			High averages are expected due to intentional sample bias -
 			I only listen to and review performances and recordings that I expect to be great.
 		<p>
-		<h1>Sound Quality</h1>
+		<h1>Sound Quality <font size="+0">Average <%= s_avg %>, Median <%= s_med%></font></h1>
 		<table>
 		<tr>
 		<td>Rating</td>
@@ -49,7 +78,7 @@
 		}
 		%>
 		</table>
-		<h1>Performance Quality</h1>
+		<h1>Performance Quality <font size="+0">Average <%= p_avg %>, Median <%= p_med%></font></h1>
 		<table>
 		<tr>
 		<td>Rating</td>

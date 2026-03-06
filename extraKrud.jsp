@@ -81,7 +81,7 @@
 	}
 
 	// How long to make the barchart graphs in the histograms
-	static final double bar_scale = 3.0;
+	static final double bar_scale = 2.0;
 
 	// Process a row in the histogram for ratings & reviews
 	static RowData processHistogramRow(ResultSet rs) throws Exception {
