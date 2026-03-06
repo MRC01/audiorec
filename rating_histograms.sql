@@ -23,3 +23,12 @@ from (
 ) t1
 order by 1
 ;
+-- Matrix of sound vs. performance quality (can make scatterplot from this)
+select ratesound, rateperf, count(*)
+from (
+	select ratesound, rateperf
+	from reviews
+)
+group by rateperf, ratesound
+order by rateperf desc, ratesound
+;
