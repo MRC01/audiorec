@@ -17,9 +17,9 @@
 			+ " from reviews");
 		if(rs.next()) {
 			s_avg = String.format("%3.2f", rs.getDouble("s_avg"));
-			s_med = String.format("%1d", rs.getInt("s_med"));
+			s_med = String.format("%3.1f", rs.getDouble("s_med"));
 			p_avg = String.format("%3.2f", rs.getDouble("p_avg"));
-			p_med = String.format("%1d", rs.getInt("p_med"));
+			p_med = String.format("%3.1f", rs.getDouble("p_med"));
 		}
 		rs.close();
 	}
