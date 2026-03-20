@@ -16,10 +16,10 @@
 			+ ", percentile_cont(0.5) within group(order by rateperf) as p_med"
 			+ " from reviews");
 		if(rs.next()) {
-			s_avg = String.format("%3.1f", rs.getDouble("s_avg"));
-			s_med = String.format("%3.1f", rs.getDouble("s_med"));
-			p_avg = String.format("%3.1f", rs.getDouble("p_avg"));
-			p_med = String.format("%3.1f", rs.getDouble("p_med"));
+			s_avg = String.format("%3.2f", rs.getDouble("s_avg"));
+			s_med = String.format("%1d", rs.getInt("s_med"));
+			p_avg = String.format("%3.2f", rs.getDouble("p_avg"));
+			p_med = String.format("%1d", rs.getInt("p_med"));
 		}
 		rs.close();
 	}
