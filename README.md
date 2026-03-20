@@ -42,7 +42,7 @@ select release_id from releases where audiorec_id=1
 
 Now wrap it in a delete, like this:
 
-select * from reviews where release_id in (select release_id from releases where audiorec_id=1);
+delete from reviews where release_id in (select release_id from releases where audiorec_id=1);
 
 This deletes ALL rows in reviews!
 However, if you replace the erroneous statement with another like this:
