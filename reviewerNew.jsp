@@ -5,11 +5,8 @@
 	</head>
 	<body>
 		<h1><a href="appMain.jsp">Back to Audio Recordings</a></h1>
-		<!-- show all the reviewers -->
-		<br>
-		<%@ include file="reviewerList.jsp" %>
-		<br>
-		<b><font size="+2">Add Reviewer:</font></b>
+		<p>
+		<b><font size="+2">New Reviewer</font></b>
 		<br>
 		<form method=post action="reviewerFormInsert.jsp">
 			<br>Initials
@@ -27,5 +24,8 @@
 			<p>
 			<input type=submit value="Submit">
 		</form>
+		<p>
+		<!-- show all the reviewers -->
+		<%@ include file="reviewerList.jsp" %>
 	</body>
 </html>

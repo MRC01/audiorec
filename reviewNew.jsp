@@ -52,9 +52,6 @@ releaseRef = "<a href=\"releaseMain.jsp?id=" + release_id + "\">Audio Recording 
 		}
 		%>
 		<p>
-		<!-- List all the reviewers -->
-		<%@ include file="reviewerList.jsp" %>
-		<br>
 		<b><font size="+2">New Review</font></b>
 		<br>
 		<form method=post action="reviewFormInsert.jsp">
@@ -71,5 +68,8 @@ releaseRef = "<a href=\"releaseMain.jsp?id=" + release_id + "\">Audio Recording 
 			<p>
 			<input type=submit value="Submit">
 		</form>
+		<p>
+		<!-- List all the reviewers, so the user can pick one -->
+		<%@ include file="reviewerList.jsp" %>
 	</body>
 </html>

@@ -50,11 +50,6 @@ audiorecRef = "<a href=\"audiorecMain.jsp?id=" + audiorec_id + "\">Audio Recordi
 		}
 		%>
 		<p>
-		<!-- List all the releases -->
-		<jsp:include page="audiorecReleases.jsp">
-			<jsp:param name="id" value="<%= audiorec_id %>"/>
-		</jsp:include>
-		<br>
 		<b><font size="+2">New Release</font></b>
 		<br>
 		<form method=post action="releaseFormInsert.jsp">
@@ -79,5 +74,10 @@ audiorecRef = "<a href=\"audiorecMain.jsp?id=" + audiorec_id + "\">Audio Recordi
 			<p>
 			<input type=submit value="Submit">
 		</form>
+		<p>
+		<!-- List all the releases -->
+		<jsp:include page="audiorecReleases.jsp">
+			<jsp:param name="id" value="<%= audiorec_id %>"/>
+		</jsp:include>
 	</body>
 </html>

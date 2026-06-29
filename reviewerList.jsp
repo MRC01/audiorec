@@ -12,7 +12,7 @@ try {
 			+ " from reviewers p"
 			+ " left outer join reviews r on (r.reviewer_id = p.id)"
 			+ " group by p.id, p.initials, p.lastname, p.misc, p.equipment, p.preferences"
-			+ " order by initials"
+			+ " order by initials desc"
 		);
 	%>
 	<font size="+0">

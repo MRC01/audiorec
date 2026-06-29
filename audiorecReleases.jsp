@@ -6,9 +6,7 @@
 String	id = request.getParameter("id"),
 	releaseNewRef = "<a href=\"releaseNew.jsp?id=" + id + "\">Add New Release</a>";
 %>
-<font size="+2">
-Releases
-</font>
+<font size="+2"><b>Releases</b></font>
 <br>
 <%= releaseNewRef %>
 <br>
